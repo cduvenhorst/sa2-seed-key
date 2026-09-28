@@ -9,7 +9,8 @@ ODX-Flash-Container und besteht aus Bytecode für eine kleine virtuelle Maschine
 Steuergerät gelieferten Seed in den passenden Key umrechnet.
 
 Eine ausführliche Beschreibung von Algorithmus und Datentypen für Entwickler steht in
-[doc/SA2SeedKey.md](doc/SA2SeedKey.md).
+[doc/SA2SeedKey.de.md](doc/SA2SeedKey.de.md)
+(englische Fassung: [doc/SA2SeedKey.en.md](doc/SA2SeedKey.en.md)).
 
 ## Installation
 

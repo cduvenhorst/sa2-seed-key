@@ -1,5 +1,7 @@
 # SA2SeedKey – Algorithmus und Datentypen
 
+🇩🇪 Deutsch · [🇬🇧 English](SA2SeedKey.en.md)
+
 Dieses Dokument richtet sich an Entwickler, die das Package verwenden, erweitern oder prüfen
 möchten. Es beschreibt die virtuelle Maschine, die ein SA2-Skript ausführt, den Befehlssatz und
 die öffentlichen Swift-Typen.
