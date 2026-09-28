@@ -8,6 +8,9 @@ ausweisen, meist um eine Programmiersitzung freizuschalten. Das SA2-„Skript“
 ODX-Flash-Container und besteht aus Bytecode für eine kleine virtuelle Maschine, die den vom
 Steuergerät gelieferten Seed in den passenden Key umrechnet.
 
+Eine ausführliche Beschreibung von Algorithmus und Datentypen für Entwickler steht in
+[doc/SA2SeedKey.md](doc/SA2SeedKey.md).
+
 ## Installation
 
 ```swift
