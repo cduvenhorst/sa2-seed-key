@@ -1,5 +1,7 @@
 # SA2SeedKey
 
+🇩🇪 Deutsch · [🇬🇧 English](README.en.md)
+
 Swift-Package für die SA2-Seed/Key-Authentifizierung von Steuergeräten des Volkswagen-Konzerns.
 Portierung des Python-Moduls [bri3d/sa2_seed_key](https://github.com/bri3d/sa2_seed_key).
 
