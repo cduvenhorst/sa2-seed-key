@@ -26,6 +26,25 @@ struct SA2ScriptTests {
         #expect(try script.key(forSeed: 0xA04E_B1ED) == script.key(forSeed: 0xA04E_B1ED))
     }
 
+    /// Runs both scripts many times in parallel. Meant to be run with
+    /// `swift test --sanitize=thread` to detect data races.
+    @Test func isThreadSafe() async throws {
+        let cases = [
+            (Self.loopScript, UInt32(0x1A1B_1C1D), UInt32(0x6A37_F02E)),
+            (Self.nestedScript, UInt32(0xA04E_B1ED), UInt32(0x3C78_76D8)),
+        ]
+
+        try await withThrowingTaskGroup(of: (UInt32, UInt32).self) { group in
+            for index in 0..<1_000 {
+                let (script, seed, expectedKey) = cases[index % cases.count]
+                group.addTask { (try script.key(forSeed: seed), expectedKey) }
+            }
+            for try await (key, expectedKey) in group {
+                #expect(key == expectedKey)
+            }
+        }
+    }
+
     @Test func decodesInstructions() throws {
         #expect(try Self.loopScript.instructions() == [
             .loop(count: 2),

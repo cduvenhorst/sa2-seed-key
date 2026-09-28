@@ -309,6 +309,27 @@ als lokale Variable angelegt; es gibt keinen gemeinsamen, veränderlichen Zustan
 bewusst nicht öffentlich, damit sich die Implementierung ändern kann, ohne die Schnittstelle zu
 brechen.
 
+### Thread-Sicherheit
+
+Ein `SA2Script` kann ohne Sperren von beliebig vielen Threads oder Tasks gleichzeitig verwendet
+werden:
+
+- **Kein gemeinsamer veränderlicher Zustand.** `SA2Script`, `SA2Instruction` und `SA2Error` sind
+  Werttypen ohne veränderliche Eigenschaften; der Bytecode liegt in `let bytes: [UInt8]`. Das
+  Package enthält keine Klassen und keine globalen oder statischen Variablen.
+- **Eigene Maschine pro Aufruf.** Register, Übertragsbit, Befehlszeiger und Schleifenstapel
+  existieren nur als lokale `Machine` innerhalb von `key(forSeed:)`.
+- **Prüfung durch den Compiler.** Das Package wird im Swift-6-Sprachmodus übersetzt, der
+  Datenrennen bereits beim Kompilieren erkennt. Alle öffentlichen Typen sind `Sendable`.
+- **Prüfung zur Laufzeit.** Der Test `isThreadSafe` führt beide Testskripte 1.000-mal parallel
+  aus. Die CI lässt die Tests unter Linux zusätzlich mit dem Thread-Sanitizer laufen
+  (`swift test --sanitize=thread`), der Datenrennen während der Ausführung meldet.
+
+Einzige Einschränkung: `SA2Instruction.init(decoding:at:)` akzeptiert jede `Collection<UInt8>`.
+Wird dort eine eigene, klassenbasierte Sammlung übergeben, die ein anderer Thread gleichzeitig
+verändert, liegt die Synchronisierung beim Aufrufer. Für `[UInt8]`, `Data` und `SA2Script` spielt
+das keine Rolle, da diese beim Verändern kopiert werden.
+
 ## 7. Fehlerbehandlung
 
 Alle werfenden Methoden verwenden *typed throws* (`throws(SA2Error)`). Im `catch`-Block ist
