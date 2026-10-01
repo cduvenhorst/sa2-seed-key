@@ -1,4 +1,4 @@
-# SA2SeedKey
+# SA2-Seed/Key
 
 🇬🇧 English · [🇩🇪 Deutsch](README.md)
 
